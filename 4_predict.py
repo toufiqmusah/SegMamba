@@ -13,6 +13,7 @@ from light_training.dataloading.dataset import get_train_val_test_loader_from_tr
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--data_dir", type=str, required=True)
+parser.add_argument("--model_path", type=str, required=True)
 parser.add_argument("--save_dir", type=str, required=True)
 args = parser.parse_args()
 
@@ -54,7 +55,7 @@ class BraTSTrainer(Trainer):
                         depths=[2,2,2,2],
                         feat_size=[48, 96, 192, 384])
         
-        model_path = "logs/segmamba/model/final_model_0.9038.pt"
+        model_path = args.model_path
         new_sd = self.filte_state_dict(torch.load(model_path, map_location="cpu"))
         model.load_state_dict(new_sd)
         model.eval()
